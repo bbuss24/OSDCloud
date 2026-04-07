@@ -38,7 +38,7 @@ try {
 catch {
     Write-Warning "Start-OSDCloudGUI parameters not accepted in this build. Falling back to preselection + GUI."
     # Fallback: set globals/config then start GUI
-    $Global:OSDCloud = $Global:OSDCloud ?? @{}
+    if ($null -eq $Global:OSDCloud) { $Global:OSDCloud = @{} }
     $Global:OSDCloud.OSVersion      = $OSDCloudParams.OSVersion
     $Global:OSDCloud.OSBuild        = $OSDCloudParams.OSBuild
     $Global:OSDCloud.OSEdition      = $OSDCloudParams.OSEdition
