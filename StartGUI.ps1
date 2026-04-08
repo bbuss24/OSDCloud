@@ -29,6 +29,13 @@ $Global:MyOSDCloud = [ordered]@{
     ShutdownSetupComplete = [bool]$true
     SyncMSUpCatDriverUSB  = [bool]$true
     CheckSHA1             = [bool]$true
+
+        # Restrict OS options
+    OSVersion             = 'Windows 11'       # Restrict to Windows 11
+    OSBuild               = '24H2'             # Restrict to 24H2 build
+    OSEdition             = 'Enterprise'       # Restrict to Enterprise edition
+    OSLanguage            = 'en-us'            # Restrict to en-us language
+    OSArchitecture        = 'x64'              # Restrict to x64 architecture
 }
 
 # Launch OSDCloud GUI with branding
