@@ -16,6 +16,13 @@ $OSEdition = 'Enterprise'
 $OSActivation = 'Volume'
 $OSLanguage = 'en-us'
 
+# Override OSDCloud Values to restrict OS options
+$Global:OSDModuleResource.OSDCloud.Values.OSNameValues = @($OSName)
+$Global:OSDModuleResource.OSDCloud.Values.OSReleaseIDValues = @('25H2')
+$Global:OSDModuleResource.OSDCloud.Values.OSEditionValues = @($OSEdition)
+$Global:OSDModuleResource.OSDCloud.Values.OSLanguageValues = @($OSLanguage)
+$Global:OSDModuleResource.OSDCloud.Values.OSVersionValues = @('Windows 11')
+
 # Set OSDCloud Variables
 $Global:MyOSDCloud = [ordered]@{
     Restart               = $false
@@ -31,18 +38,6 @@ $Global:MyOSDCloud = [ordered]@{
     CheckSHA1             = $true
 }
 
-# Predefine the OS index to restrict available options
-$Global:OSDCloud.Index = @(
-    @{
-        OSName        = $OSName
-        OSBuild       = '25H2'
-        OSEdition     = $OSEdition
-        OSLanguage    = $OSLanguage
-        Architecture  = 'x64'
-        OSActivation  = $OSActivation
-    }
-)
-
-# Launch OSDCloud GUI with branding
+# Launch OSDCloud GUI with restricted options
 Write-Host "Starting OSDCloud GUI with restricted options..." -ForegroundColor Green
 Start-OSDCloudGUI -BrandName "NetApp IT" -BrandColor "#00ADEF"
