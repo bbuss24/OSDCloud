@@ -38,6 +38,17 @@ $Global:MyOSDCloud = [ordered]@{
     OSArchitecture        = 'x64'              # Restrict to x64 architecture
 }
 
+# Prevent the full OS list from being built
+$Global:OSDCloud.OSList = @(
+    @{
+        OSName        = $OSName
+        OSBuild       = '24H2'
+        OSEdition     = $OSEdition
+        OSLanguage    = $OSLanguage
+        Architecture  = 'x64'
+    }
+)
+
 # Launch OSDCloud GUI with branding
 Write-Host "Starting OSDCloud GUI..." -ForegroundColor Green
 Start-OSDCloudGUI -BrandName "NetApp IT" -BrandColor "#00ADEF"
