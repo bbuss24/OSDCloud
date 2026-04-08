@@ -10,26 +10,27 @@ Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host "              NetApp IT Deployment           " -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 
-# Path to the JSON configuration file
-$JsonFile = "$env:LOCALAPPDATA\Temp\Start-OSDCloudGUI.json"
+# Variables for Windows OS / Edition
+$OSName = 'Windows 11 25H2 x64'
+$OSEdition = 'Enterprise'
+$OSActivation = 'Volume'
+$OSLanguage = 'en-us'
 
-# Define the restricted configuration
-$JsonContent = @{
-    BrandName         = "NetApp IT"
-    BrandColor        = "#00ADEF"
-    OSActivation      = "Volume"
-    OSEdition         = "Enterprise"
-    OSLanguage        = "en-us"
-    OSName            = "Windows 11 25H2 x64"
-    OSReleaseID       = "25H2"
-    OSVersion         = "Windows 11"
+# Set OSDCloud Variables
+$Global:MyOSDCloud = [ordered]@{
+    Restart               = $false
+    RecoveryPartition     = $true
+    OEMActivation         = $true
+    WindowsUpdate         = $true
+    WindowsUpdateDrivers  = $true
+    WindowsDefenderUpdate = $true
+    SetTimeZone           = $true
+    ClearDiskConfirm      = $true
+    ShutdownSetupComplete = $true
+    SyncMSUpCatDriverUSB  = $true
+    CheckSHA1             = $true
 }
 
-# Convert to JSON and export
-$JsonContent | ConvertTo-Json -Depth 10 | Set-Content -Path $JsonFile -Force
-
-Write-Host "Exported restricted configuration to $JsonFile" -ForegroundColor Green
-
-# Launch OSDCloud GUI with JSON configuration
-Write-Host "Starting OSDCloud GUI with restricted options..." -ForegroundColor Green
-Start-OSDCloudGUI -AutomateJsonFile $JsonFile
+# Directly deploy the desired OS
+Write-Host "Starting OSDCloud deployment for Windows 11 25H2 x64 Enterprise en-us..." -ForegroundColor Green
+Start-OSDCloud -OSName $OSName -OSEdition $OSEdition -OSActivation $OSActivation -OSLanguage $OSLanguage
