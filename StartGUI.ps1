@@ -11,7 +11,7 @@ Write-Host "              NetApp IT Deployment           " -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 
 # Variables for Windows OS / Edition
-$OSName = 'Windows 11 25H2 x64'
+$OSName = 'Windows 11 24H2 x64'
 $OSEdition = 'Enterprise'
 $OSActivation = 'Volume'
 $OSLanguage = 'en-us'
@@ -32,12 +32,17 @@ $Global:MyOSDCloud = [ordered]@{
 
     # Restrict OS options
     OSVersion             = 'Windows 11'       # Restrict to Windows 11
-    OSBuild               = '25H2'             # Restrict to 25H2 build
+    OSBuild               = '24H2'             # Restrict to 25H2 build
     OSEdition             = 'Enterprise'       # Restrict to Enterprise edition
     OSLanguage            = 'en-us'            # Restrict to en-us language
     OSArchitecture        = 'x64'              # Restrict to x64 architecture
 }
 
+# Filtering OS options to override OSNameValues
+$Global:OSDCloud.OSNameValues = @(
+    "Windows 11 24H2 x64"
+)
+
 # Launch OSDCloud GUI with branding
-Write-Host "Starting OSDCloud GUI..." -ForegroundColor Green
-Start-OSDCloudGUI -OSVersion "Windows 11" -OSBuild "25H2" -OSEdition "Enterprise" -OSLanguage "en-us" -OSArchitecture "x64" -BrandName "NetApp IT" -BrandColor "#00ADEF"
+Write-Host "Starting OSDCloud GUI with restricted options..." -ForegroundColor Green
+Start-OSDCloudGUI -BrandName "NetApp IT" -BrandColor "#00ADEF"
