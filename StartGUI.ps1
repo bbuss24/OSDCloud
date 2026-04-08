@@ -11,44 +11,33 @@ Write-Host "              NetApp IT Deployment           " -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 
 # Variables for Windows OS / Edition
-$OSName = 'Windows 11 24H2 x64'
+$OSName = 'Windows 11 25H2 x64'
 $OSEdition = 'Enterprise'
 $OSActivation = 'Volume'
 $OSLanguage = 'en-us'
 
 # Set OSDCloud Variables
 $Global:MyOSDCloud = [ordered]@{
-    Restart               = [bool]$False
-    RecoveryPartition     = [bool]$true
-    OEMActivation         = [bool]$True
-    WindowsUpdate         = [bool]$true
-    WindowsUpdateDrivers  = [bool]$true
-    WindowsDefenderUpdate = [bool]$true
-    SetTimeZone           = [bool]$true
-    ClearDiskConfirm      = [bool]$true
-    ShutdownSetupComplete = [bool]$true
-    SyncMSUpCatDriverUSB  = [bool]$true
-    CheckSHA1             = [bool]$true
+    Restart               = $false
+    RecoveryPartition     = $true
+    OEMActivation         = $true
+    WindowsUpdate         = $true
+    WindowsUpdateDrivers  = $true
+    WindowsDefenderUpdate = $true
+    SetTimeZone           = $true
+    ClearDiskConfirm      = $true
+    ShutdownSetupComplete = $true
+    SyncMSUpCatDriverUSB  = $true
+    CheckSHA1             = $true
 
-        # Restrict OS options
+    # Restrict OS options
     OSVersion             = 'Windows 11'       # Restrict to Windows 11
-    OSBuild               = '24H2'             # Restrict to 24H2 build
+    OSBuild               = '25H2'             # Restrict to 25H2 build
     OSEdition             = 'Enterprise'       # Restrict to Enterprise edition
     OSLanguage            = 'en-us'            # Restrict to en-us language
     OSArchitecture        = 'x64'              # Restrict to x64 architecture
 }
 
-# Prevent the full OS list from being built
-$Global:OSDCloud.OSList = @(
-    @{
-        OSName        = $OSName
-        OSBuild       = '24H2'
-        OSEdition     = $OSEdition
-        OSLanguage    = $OSLanguage
-        Architecture  = 'x64'
-    }
-)
-
 # Launch OSDCloud GUI with branding
 Write-Host "Starting OSDCloud GUI..." -ForegroundColor Green
-Start-OSDCloudGUI -BrandName "NetApp IT" -BrandColor "#00ADEF"
+Start-OSDCloudGUI -OSVersion "Windows 11" -OSBuild "25H2" -OSEdition "Enterprise" -OSLanguage "en-us" -OSArchitecture "x64" -BrandName "NetApp IT" -BrandColor "#00ADEF"
