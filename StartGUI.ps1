@@ -10,39 +10,26 @@ Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host "              NetApp IT Deployment           " -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 
-# Variables for Windows OS / Edition
-$OSName = 'Windows 11 24H2 x64'
-$OSEdition = 'Enterprise'
-$OSActivation = 'Volume'
-$OSLanguage = 'en-us'
+# Path to the JSON configuration file
+$JsonFile = "$env:LOCALAPPDATA\Temp\Start-OSDCloudGUI.json"
 
-# Set OSDCloud Variables
-$Global:MyOSDCloud = [ordered]@{
-    Restart               = $false
-    RecoveryPartition     = $true
-    OEMActivation         = $true
-    WindowsUpdate         = $true
-    WindowsUpdateDrivers  = $true
-    WindowsDefenderUpdate = $true
-    SetTimeZone           = $true
-    ClearDiskConfirm      = $true
-    ShutdownSetupComplete = $true
-    SyncMSUpCatDriverUSB  = $true
-    CheckSHA1             = $true
-
-    # Restrict OS options
-    OSVersion             = 'Windows 11'       # Restrict to Windows 11
-    OSBuild               = '24H2'             # Restrict to 25H2 build
-    OSEdition             = 'Enterprise'       # Restrict to Enterprise edition
-    OSLanguage            = 'en-us'            # Restrict to en-us language
-    OSArchitecture        = 'x64'              # Restrict to x64 architecture
+# Define the restricted configuration
+$JsonContent = @{
+    BrandName         = "NetApp IT"
+    BrandColor        = "#00ADEF"
+    OSActivation      = "Volume"
+    OSEdition         = "Enterprise"
+    OSLanguage        = "en-us"
+    OSName            = "Windows 11 25H2 x64"
+    OSReleaseID       = "25H2"
+    OSVersion         = "Windows 11"
 }
 
-# Filtering OS options to override OSNameValues
-$Global:OSDCloud.OSNameValues = @(
-    "Windows 11 24H2 x64"
-)
+# Convert to JSON and export
+$JsonContent | ConvertTo-Json -Depth 10 | Set-Content -Path $JsonFile -Force
 
-# Launch OSDCloud GUI with branding
+Write-Host "Exported restricted configuration to $JsonFile" -ForegroundColor Green
+
+# Launch OSDCloud GUI with JSON configuration
 Write-Host "Starting OSDCloud GUI with restricted options..." -ForegroundColor Green
-Start-OSDCloudGUI -BrandName "NetApp IT" -BrandColor "#00ADEF"
+Start-OSDCloudGUI -AutomateJsonFile $JsonFile
