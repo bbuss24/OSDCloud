@@ -31,6 +31,18 @@ $Global:MyOSDCloud = [ordered]@{
     CheckSHA1             = $true
 }
 
-# Directly deploy the desired OS
-Write-Host "Starting OSDCloud deployment for Windows 11 25H2 x64 Enterprise en-us..." -ForegroundColor Green
-Start-OSDCloud -OSName $OSName -OSEdition $OSEdition -OSActivation $OSActivation -OSLanguage $OSLanguage
+# Predefine the OS index to restrict available options
+$Global:OSDCloud.Index = @(
+    @{
+        OSName        = $OSName
+        OSBuild       = '25H2'
+        OSEdition     = $OSEdition
+        OSLanguage    = $OSLanguage
+        Architecture  = 'x64'
+        OSActivation  = $OSActivation
+    }
+)
+
+# Launch OSDCloud GUI with branding
+Write-Host "Starting OSDCloud GUI with restricted options..." -ForegroundColor Green
+Start-OSDCloudGUI -BrandName "NetApp IT" -BrandColor "#00ADEF"
